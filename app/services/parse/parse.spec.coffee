@@ -11,14 +11,14 @@ contract =
     goal: "keep track of todos"
     models:
       Todo:
-        txt:  'string'
-        done: 'boolean'
+        txt:  String
+        done: Boolean
     archive:
       todos: 'Todo.vector'
     views:
       index:
        route: '/'
-       crud: 'todos'    
+       crud: '@todos'    
  
 # spec
 
