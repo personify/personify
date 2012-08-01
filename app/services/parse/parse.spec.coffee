@@ -18,7 +18,7 @@ contract =
     views:
       index:
        route: '/'
-       crud: '@todos'    
+       crud: 'todos'    
  
 # spec
 
@@ -31,12 +31,6 @@ module.exports =
 
     'given (contract, schema) -> will parse contract & return correct app structure': ->
       schema = 
-        name: (key, val) -> "foo"
+        name: (val) -> 
+          return memo = "foo"
       parse(contract, schema).name.should.eql "foo"
-
-    'given (contract, schema) -> where schema uses the model parser will parse contract & return correct obj structure': ->
-      schema = 
-        models: require '../models/models'
-      c = _.clone contract
-      c['models']['User'] = "a user"
-      parse(c, schema).models.User.should.eql {'_desc': "a user"}

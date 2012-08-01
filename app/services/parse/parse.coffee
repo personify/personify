@@ -1,15 +1,28 @@
 _ = require 'underscore'
 
-# parse contract and return app
+parse = ({contract, schema, parser}) -> 
+  return "err: no contract" unless contract?
+  return "err: no parser" unless parser?
+  ctx = {}
+  ctx.schema = schema or {}
+  #TODO: better obj/array handling
+  if typeof(contract) is 'object'
+    _.reduce contract, parser, {}, ctx
+  else
+    parser contract
+
+# personify.parse
 module.exports = (contract, schema) -> 
-  schema ?= {}
+  parse
+    contract: contract
+    schema: schema or {}
+    parser: (app, val, key) ->
+      if key? and @schema[key]?
+        app[key] = parse 
+          contract: val
+          parser: @schema[key]
+      else
+        app[key] = val
 
-  # return obj
+      return app
 
-  _.reduce contract, (app, val, key) -> 
-    if typeof schema[key] is 'function' 
-      app[key] = schema[key] key, val 
-    else
-      app[key] = val  
-    return app
-  , {} 
