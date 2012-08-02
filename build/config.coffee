@@ -8,7 +8,7 @@ module.exports =
   services:   []
   archive:    {}
   views:      []
-  ns:
+  paths:
     root:     path.resolve '.'
     app:      path.resolve './app'
     models:   path.resolve './app/models'

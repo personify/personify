@@ -10,7 +10,7 @@ contract =
  
 # spec
 
-module.exports =
+module.exports = 
 
   'parse:archive':
     'given (contract) -> with inline models will return equivalent': ->
