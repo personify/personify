@@ -2,7 +2,15 @@ path       = require 'path'
 fs         = require 'fs'
 coffee     = require 'coffee-script'
 Mocha      = require "mocha"
-global.app = require "./config"
+global.app = {}
+app.paths  = 
+  root:     path.resolve '.'
+  app:      path.resolve './app'
+  models:   path.resolve './app/models'
+  services: path.resolve './app/services'
+  jobs:     path.resolve './app/jobs'
+  npmBin:   path.resolve './node_modules/.bin'
+
 
 gruntConfig =
 
@@ -26,6 +34,12 @@ gruntConfig =
     test:
       files: "<config:test.files>"
       tasks: "test"
+    services:
+      files: "#{app.paths.app}/**/services/**/*.coffee"
+      tasks: "test"
+    jobs:
+      files: "#{app.paths.app}/**/jobs/**/*.coffee"
+      tasks: "test"
 
   globals:
     exports: true
@@ -37,7 +51,7 @@ module.exports = (grunt) ->
   
   grunt.initConfig gruntConfig
   grunt.loadTasks './build'
-  grunt.loadNpmTasks "grunt-exec"
+  #grunt.loadNpmTasks "grunt-exec"
 
   ## default 
 

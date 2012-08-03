@@ -1,8 +1,4 @@
-parseContract = require './services/parse'
+parse = require './services/parse/parse'
 
 module.exports = 
-  parse: (contract, schema) -> parse {}, contract, schema
-###      
-    for k, v of contract
-      app[k] = contractSchema[k]? grunt, k, v 
-    return app
+  parse: (contract, schema) -> parse contract, schema

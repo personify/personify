@@ -7,9 +7,9 @@ parse = ({contract, schema, parser}) ->
   ctx.schema = schema or {}
   #TODO: better obj/array handling
   if typeof(contract) is 'object'
-    _.reduce contract, parser, {}, ctx
+    return _.reduce contract, parser, {}, ctx
   else
-    parser contract
+    return parser contract
 
 # personify.parse
 module.exports = (contract, schema) -> 

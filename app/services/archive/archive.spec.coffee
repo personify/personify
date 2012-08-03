@@ -10,10 +10,11 @@ contract =
  
 # spec
 
-module.exports = 
+module.exports =
 
   'parse:archive':
     'given (contract) -> with inline models will return equivalent': ->
   
       a = _.reduce contract, archive, {}
       a.should.eql { todos: [] }
+    
