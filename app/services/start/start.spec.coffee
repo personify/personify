@@ -71,5 +71,8 @@ module.exports =
       should.exist @agent.dashboard.vein
     'agent.archive should be a Todo vector': ->
       @agent.archive.todos.type.should.eql 'List'
+      @agent.archive.todos.on 'push', -> console.log "PUSHED"
+      @agent.archive.todos.push 1
+      console.log @agent.archive.todos
     'cleanup': ->
       @agent.dashboard.server.close() if @agent.dashboard.server?
