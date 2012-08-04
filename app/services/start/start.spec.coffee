@@ -1,4 +1,4 @@
-require 'should'
+should = require 'should'
 _ = require 'underscore'
 path = require 'path'
 start = require './start'
@@ -12,10 +12,9 @@ namespace = (obj, ns) ->
 
 ns2path = (root, ns) -> root + '/' + ns.replace '.', '/'
 
-
 # sample data
 
-agent =
+contract =
   name: "todos"
   goal: "keep track of todos"
   models:
@@ -23,21 +22,21 @@ agent =
       txt:  String
       done: Boolean
   archive:
-    todos: 'Todo.vector'
+    todos: 'Todo.List'
   views:
     index:
      route: '/'
      crud: 'todos'
 
   paths:
-    root:     path.resolve './test'
-    app:      path.resolve './test/app'
-    models:   path.resolve './test/app/models'
-    services: path.resolve './test/app/services'
-    client:   path.resolve './test/app/dashboard/client'
-    server:   path.resolve './test/app/dashboard/server'
-    public:   path.resolve './test/app/dashboard/public'
-    npmBin:   path.resolve './test/node_modules/.bin'
+    root:     path.resolve __dirname + '/../test'
+    app:      path.resolve __dirname + '/../test/app'
+    models:   path.resolve __dirname + '/../test/app/models'
+    services: path.resolve __dirname + '/../test/app/services'
+    client:   path.resolve __dirname + '/../test/app/dashboard/client'
+    server:   path.resolve __dirname + '/../test/app/dashboard/server'
+    public:   path.resolve __dirname + '/../test/app/dashboard/public'
+    npmBin:   path.resolve __dirname + '/../test/node_modules/.bin'
 
   # standard 
 
@@ -57,15 +56,20 @@ agent =
         console.log err
         ## TODO: any other loading strategy
         ## npm, github
+
+  log: (str) -> console.log str
     
 # spec
 
 module.exports =
-
   start:
-    'given (agent) -> will start the agent': -> 
-      console.log "agent came back: "
-      agent = start(agent)
-      console.log agent
-      agent.dashboard.server.close()
-      #start(agent).should.eql agent
+    'EXE start(contract)': ->
+      @agent = start(contract)
+    'agent.dashboard.server should exist': ->
+      should.exist @agent.dashboard.server
+    'agent.dashboard.vein should exist': ->
+      should.exist @agent.dashboard.vein
+    'agent.archive should be a Todo vector': ->
+      @agent.archive.todos.type.should.eql 'List'
+    'cleanup': ->
+      @agent.dashboard.server.close() if @agent.dashboard.server?

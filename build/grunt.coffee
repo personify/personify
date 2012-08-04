@@ -13,7 +13,6 @@ app.paths  =
 
 
 gruntConfig =
-
   pkg: "<json:package.json>"
 
   exec:
@@ -27,9 +26,9 @@ gruntConfig =
 
   mocha: 
     options: 
-      reporter: 'spec'
-      ui:       'exports'
-
+      reporter:    'spec'
+      ui:          'exports'
+      ignoreLeaks: 'true'
   watch:
     test:
       files: "<config:test.files>"
@@ -39,6 +38,9 @@ gruntConfig =
       tasks: "test"
     jobs:
       files: "#{app.paths.app}/**/jobs/**/*.coffee"
+      tasks: "test"
+    util:
+      files: "#{app.paths.app}/**/util/**/*.coffee"
       tasks: "test"
 
   globals:

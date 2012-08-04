@@ -1,9 +1,7 @@
 connect = require "connect"
-#Vein    = require "vein"
+Vein    = require "vein"
 
 module.exports = (agent) -> 
-
-  console.log "dash"
 
   agent.dashboard      ?= {}
   agent.dashboard.port ?= 8080
@@ -12,17 +10,13 @@ module.exports = (agent) ->
   Connect = connect()
   Connect.use connect.favicon()
   Connect.use connect.staticCache()
-  #Connect.use connect.static agent.paths.public
- 
+  Connect.use connect.static agent.paths.public
   agent.dashboard.server = Connect.listen agent.dashboard.port
 
-  agent
+  # Vein - websockets
+  agent.dashboard.vein = new Vein agent.dashboard.server
 
-  #  agent.dashboard.server.fuckoff 
+  agent.log "WebServer started on #{agent.dashboard.port}"
+  agent.log "WebSocket server started"
   
-  # Vein
-  #vein = new Vein server
-  #vein.addFolder paths.services
-
-  #console.log "Server started on #{config.app.port}"
-  #console.log "Using database #{config.mongo.host}"
+  return agent
