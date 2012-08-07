@@ -15,7 +15,8 @@ class Collection extends EventEmitter
     @coll.push item
     @emit 'push', item
 
-document = (model) -> return ""
+collection = (ns) -> new Collection ns
+doc = (model) -> return ""
 
 
 module.exports = (agent) -> 
@@ -24,8 +25,10 @@ module.exports = (agent) ->
     for key, val of agent.archive
       if typeof(val) is 'string' 
         # collection
-        if val.contains '.' then agent.archive[key] = new Collection val 
+        if val.contains '.'
+          agent.archive[key] = collection val 
         # document (model)
-        else agent.archive[key] = document val
+        else 
+          agent.archive[key] = doc val
 
   return agent

@@ -1,16 +1,8 @@
 should = require 'should'
-_ = require 'underscore'
-path = require 'path'
-start = require './start'
+path   = require 'path'
+_      = require 'underscore'
 
-## MOVE TO UTIL
-
-namespace = (obj, ns) -> 
-  _.reduce (ns.split '.'), (obj, space) ->
-    return obj[space] if obj[space]?
-  , obj
-
-ns2path = (root, ns) -> root + '/' + ns.replace '.', '/'
+start  = require './start'
 
 # sample data
 
@@ -22,7 +14,7 @@ contract =
       txt:  String
       done: Boolean
   archive:
-    todos: 'Todo.List'
+    todos: 'Todo.Collection'
   views:
     index:
      route: '/'
@@ -37,34 +29,13 @@ contract =
     server:   path.resolve __dirname + '/../test/app/dashboard/server'
     public:   path.resolve __dirname + '/../test/app/dashboard/public'
     npmBin:   path.resolve __dirname + '/../test/node_modules/.bin'
-
-  # standard 
-
-  load: (ns) -> 
-
-    # already in the agent's namespace
-    return (namespace @, ns) if (namespace @, ns)?
-    # or try to load from fs relative to agent
-    try
-      require( ns2path @paths.app, ns )
-    catch e
-    # or try to load from personify core
-      try
-        require( ns2path app.paths.app, ns )
-      catch err
-        console.log "#{@name}.load.err:"
-        console.log err
-        ## TODO: any other loading strategy
-        ## global ns, npm, github, amd if client
-
-  log: (str) -> console.log str
     
 # spec
 
 module.exports =
   start:
     'EXE start(contract)': ->
-      @agent = start(contract)
+      @agent = start contract
     'agent.dashboard.server should exist': ->
       should.exist @agent.dashboard.server
     'agent.dashboard.vein should exist': ->
