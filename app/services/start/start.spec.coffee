@@ -1,11 +1,8 @@
-should = require 'should'
-_      = require 'underscore'
-
+should   = require 'should'
 start    = require './start'
-contract = require '../test/contract'
- 
-# spec
+contract = require '../test/samples/contract'
 module.exports =
+
   start:
     'EXE start(contract)': ->
       @agent = start contract
@@ -18,4 +15,4 @@ module.exports =
         item.should.equal 1
       @agent.archive.todos.push 1
     'cleanup': ->
-      @agent.dashboard.server.close() if @agent.dashboard.server?
+      @agent.dashboard.server?.close()

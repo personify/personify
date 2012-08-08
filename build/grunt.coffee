@@ -1,7 +1,7 @@
 path       = require 'path'
 fs         = require 'fs'
 coffee     = require 'coffee-script'
-Mocha      = require "mocha"
+Mocha      = require 'mocha'
 global.app = {}
 app.paths  = 
   root:     path.resolve '.'
@@ -14,16 +14,8 @@ app.paths  =
 
 gruntConfig =
   pkg: "<json:package.json>"
-
-  exec:
-    mocha: 
-      command: "mocha --compilers coffee:coffee-script
-      $(find ./ -name '*.spec.coffee') -R spec --ui 
-      exports"
-
   test:
     files: ["#{app.paths.app}/**/*.spec.coffee"]
-
   mocha: 
     options: 
       reporter:    'spec'
@@ -36,9 +28,9 @@ gruntConfig =
     services:
       files: "#{app.paths.app}/**/services/**/*.coffee"
       tasks: "test"
-    jobs:
-      files: "#{app.paths.app}/**/jobs/**/*.coffee"
-      tasks: "test"
+    #jobs:
+    #  files: "#{app.paths.app}/**/jobs/**/*.coffee"
+    #  tasks: "test"
     util:
       files: "#{app.paths.app}/**/util/**/*.coffee"
       tasks: "test"
@@ -49,18 +41,14 @@ gruntConfig =
 
 module.exports = (grunt) ->
 
-  ## init config 
-  
+  ## init config  
   grunt.initConfig gruntConfig
   grunt.loadTasks './build'
   #grunt.loadNpmTasks "grunt-exec"
 
   ## default 
-
   grunt.registerTask "default", "test watch"
-
   grunt.registerMultiTask "test", "Run unit tests with Mocha", ->
-    
     # tell grunt this is an asynchronous task
     done = @async()
 
