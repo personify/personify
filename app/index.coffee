@@ -1,4 +1,4 @@
-parse = require './services/parse/parse'
-
+start = require './services/start'
 module.exports = 
-  parse: (contract, schema) -> parse contract, schema
+
+  start: (contract) -> start contract

@@ -1,7 +1,7 @@
 require 'should'
 _ = require 'underscore'
-views = require './views'
-
+views = require './index'
+###
 # sample data
 
 viewContract =
