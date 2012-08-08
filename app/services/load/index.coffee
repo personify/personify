@@ -1,7 +1,6 @@
 {ns2obj, ns2path} = require '../namespace'
 
 ## load
-
 module.exports = (ns) -> 
   # already in the agent's namespace
   return (ns2obj @, ns) if (ns2obj @, ns)?
