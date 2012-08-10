@@ -21,4 +21,4 @@ module.exports  =
           onchange: 'todos.push'
         list: 'todos'
   log:   console.log
-  paths: paths resolve('../')
+  paths: paths resolve(__dirname + '/../')

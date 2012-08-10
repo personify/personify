@@ -4,7 +4,10 @@ contract = require '../test/app/contract'
 module.exports =
 
   start:
-    'EXE start(contract)': ->
-      @agent = start contract
-    'cleanup': ->
-      @agent.dashboard.server?.close()
+    "start new @agent if it's not running": ->
+      contract.log = -> # mute log
+      console.log contract
+      contract.web = port: 8080      
+      @agent = start contract unless @agent.web.server?
+    #'cleanup': ->
+      #@agent.dashboard.server?.close()
